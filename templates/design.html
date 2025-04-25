@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<script>
+    function toggleMode() {
+        const body = document.body;
+        body.classList.toggle('dark-mode');
+
+        const btn = document.getElementById('modeToggle');
+        btn.innerText = body.classList.contains('dark-mode') ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+    }
+</script>
+
+<div style="text-align: right; margin-bottom: 10px;">
+    <button onclick="toggleMode()" id="modeToggle">Switch to Dark Mode</button>
+</div>
+
+<h1>📚 LAST LIBRARY SYSTEM</h1>
+
+<h2>Available Books</h2>
+<table id="booksTable">
+    <thead>
+        <tr>
+            <th>Book ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book.book_id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.genre }}</td>
+            <td>{{ book.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Reserve a Book</h2>
+<form method="POST" action="/reserve">
+    <input type="email" name="email" placeholder="Enter your email" required>
+    <input type="text" name="book_id" placeholder="Enter Book ID" required>
+    <button type="submit">Reserve</button>
+</form>
+
+<h2>Cancel a Reservation</h2>
+<form method="POST" action="/cancel">
+    <input type="email" name="email" placeholder="Enter your email" required>
+    <input type="text" name="book_id" placeholder="Enter Book ID" required>
+    <button type="submit">Cancel</button>
+</form>
+
+<p>Current time: {{ current_time }}</p>
+
+</body>
+</html>
